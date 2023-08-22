@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    #canvas-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="miCanvas" width="600" height="600"></canvas>
+
+  <script>
+
+    var canvas = document.getElementById("miCanvas");
+
+
+    if (canvas.getContext) {
+      var ctx = canvas.getContext("2d");
+
+      let x = canvas.width / 2;
+      let y = canvas.height / 2;
+      let tamañoCuadro = 50;
+      let colorCuadro = colorAleatorio();
+
+      function drawSquare() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = colorCuadro;
+        ctx.fillRect(x, y, tamañoCuadro, tamañoCuadro);
+      }
+
+      function colorAleatorio() {
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
+      function handleKeyDown(event) {
+        const speed = 5;
+
+        if (event.key === "ArrowUp" && y > 0) {
+          y -= speed;
+        } else if (event.key === "ArrowDown" && y < canvas.height - tamañoCuadro) {
+          y += speed;
+        } else if (event.key === "ArrowLeft" && x > 0) {
+          x -= speed;
+        } else if (event.key === "ArrowRight" && x < canvas.width - tamañoCuadro) {
+          x += speed;
+        }
+
+        colorCuadro = colorAleatorio();
+        drawSquare();
+      }
+
+      drawSquare();
+
+      window.addEventListener("keydown", handleKeyDown);
+    }
+  </script>
+</body>
+
+</html>
