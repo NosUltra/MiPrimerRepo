@@ -40,44 +40,46 @@
 
       let x = canvas.width / 2;
       let y = canvas.height / 2;
-      let tamañoCuadro = 50;
-      let colorCuadro = colorAleatorio();
 
-      function drawSquare() {
+      const velocidad = 2;
+
+      let ultimaDireccion = null;
+
+      function drawFigure() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = colorCuadro;
-        ctx.fillRect(x, y, tamañoCuadro, tamañoCuadro);
+        ctx.fillStyle = "blue";
+        ctx.fillRect(x, y, 50, 50);
       }
 
-      function colorAleatorio() {
-        const letters = "0123456789ABCDEF";
-        let color = "#";
-        for (let i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-      }
-
-      function handleKeyDown(event) {
-        const speed = 5;
-
-        if (event.key === "ArrowUp" && y > 0) {
-          y -= speed;
-        } else if (event.key === "ArrowDown" && y < canvas.height - tamañoCuadro) {
-          y += speed;
-        } else if (event.key === "ArrowLeft" && x > 0) {
-          x -= speed;
-        } else if (event.key === "ArrowRight" && x < canvas.width - tamañoCuadro) {
-          x += speed;
+      function cambiarDireccion() {
+        if (ultimaDireccion === "left") {
+          x -= velocidad;
+        } else if (ultimaDireccion === "right") {
+          x += velocidad;
+        } else if (ultimaDireccion === "up") {
+          y -= velocidad;
+        } else if (ultimaDireccion === "down") {
+          y += velocidad;
         }
 
-        colorCuadro = colorAleatorio();
-        drawSquare();
+        drawFigure();
+        window.requestAnimationFrame(cambiarDireccion);
       }
 
-      drawSquare();
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowLeft") {
+          ultimaDireccion = "left";
+        } else if (event.key === "ArrowRight") {
+          ultimaDireccion = "right";
+        } else if (event.key === "ArrowUp") {
+          ultimaDireccion = "up";
+        } else if (event.key === "ArrowDown") {
+          ultimaDireccion = "down";
+        }
+      });
 
-      window.addEventListener("keydown", handleKeyDown);
+  
+      cambiarDireccion();
     }
   </script>
 </body>
