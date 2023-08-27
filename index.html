@@ -52,19 +52,19 @@
       }
 
       function cambiarDireccion() {
-        if (ultimaDireccion === "left") {
-          x -= velocidad;
-        } else if (ultimaDireccion === "right") {
-          x += velocidad;
-        } else if (ultimaDireccion === "up") {
-          y -= velocidad;
-        } else if (ultimaDireccion === "down") {
-          y += velocidad;
-        }
+            if (ultimaDireccion === "left") {
+                x = (x - velocidad + canvas.width) % canvas.width;
+            } else if (ultimaDireccion === "right") {
+                x = (x + velocidad) % canvas.width;
+            } else if (ultimaDireccion === "up") {
+                y = (y - velocidad + canvas.height) % canvas.height;
+            } else if (ultimaDireccion === "down") {
+                y = (y + velocidad) % canvas.height;
+            }
 
-        drawFigure();
-        window.requestAnimationFrame(cambiarDireccion);
-      }
+            drawFigure();
+            window.requestAnimationFrame(cambiarDireccion);
+        }
 
       window.addEventListener("keydown", (event) => {
         if (event.key === "ArrowLeft") {
