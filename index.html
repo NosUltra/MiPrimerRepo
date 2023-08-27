@@ -41,7 +41,8 @@
       let x = canvas.width / 2;
       let y = canvas.height / 2;
 
-      const velocidad = 2;
+      let velocidad = 2;
+      const aumentarVelocidad = 7;
 
       let ultimaDireccion = null;
 
@@ -75,9 +76,16 @@
           ultimaDireccion = "up";
         } else if (event.key === "ArrowDown") {
           ultimaDireccion = "down";
-        }
+        } else if (event.key === " ") { 
+                velocidad = aumentarVelocidad;
+            }
       });
 
+      window.addEventListener("keyup", (event) => {
+            if (event.key === " ") { 
+                velocidad = 2; 
+            }
+        });
   
       cambiarDireccion();
     }
